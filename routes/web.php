@@ -28,7 +28,7 @@ Route::get('/jobs', function (){
     ]);
 });
 
-//Создание job
+//Адрессация на создание job
 
 Route::get('/jobs/create', function () {
     return view('jobs.create');
@@ -42,6 +42,7 @@ Route::get('/jobs/{id}', function ($id){
     return view('jobs.show', ['job' => $job]);
 });
 
+// Создание job
 Route::post('/jobs', function () {
     // dd('Hello from the post');
     // dd(request()->all());
@@ -56,6 +57,45 @@ Route::post('/jobs', function () {
         'salary' => request('salary'),
         'employer_id' => 1
     ]);
+
+    return redirect('/jobs');
+});
+
+// Редактируй
+Route::get('/jobs/{id}/edit', function ($id){
+
+    $job = Job::find($id);
+    return view('jobs.edit', ['job' => $job]);
+});
+
+// Обновить
+
+Route::patch('/jobs/{id}', function ($id){
+
+    //Validation
+
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
+
+    //authorize
+
+    $job = Job::findOrFail($id); // null if we cant find
+
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary'),
+    ]); 
+
+    //redirect
+    return redirect('/jobs/' . $job->id);   
+});
+
+// remove
+
+Route::delete('/jobs/{id}', function ($id){
+    Job::findOrFail($id)->delete();
 
     return redirect('/jobs');
 });
