@@ -45,7 +45,7 @@
               <x-form-field class="sm:col-span-4">
                 <x-form-label for="password_confirmation">Confirm Password</x-form-label>
                 <div class="mt-2">
-                  <x-form-input type="password_confirmation" name="password_confirmation" id="password_confirmation" placeholder="Your password_confirmation" required></x-form-input>
+                  <x-form-input type="password" name="password_confirmation" id="password_confirmation" placeholder="Your password" required></x-form-input>
                 </div>
                 <x-form-error name="password_confirmation"></x-form-error>
               </x-form-field >
